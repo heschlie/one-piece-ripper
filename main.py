@@ -110,11 +110,16 @@ def find_segments(title) -> list[int]:
     :return: list of chapters to split on
     """
     segments = []
+    chapter_count = title['chapter_count']
     for s in title['segments_map'].split(','):
+        segment = 0
         if '-' in s:
-            segments.append(int(s.split('-')[0]))
+            segment = int(s.split('-')[0])
         else:
-            segments.append(int(s))
+            segment = int(s)
+
+        if 0 < segment <= chapter_count:
+            segments.append(segment)
 
     # Remove value 1 from list, as we want to split AFTER the first episode not before
     try:
